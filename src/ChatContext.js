@@ -54,6 +54,10 @@ export class ChatContextProvider extends React.Component {
         message: { ...message, timestamp: new Date().toLocaleString() }
       },
       status => {
+        if (status.error) {
+          console.log("Error while publishing a message!", status);
+          return;
+        }
         console.log("Message published!", status);
       }
     );
