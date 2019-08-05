@@ -1,24 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ChatContext } from "./ChatContext";
+
+import "./App.css";
 
 function App() {
+  const { messages, sendMessage } = React.useContext(ChatContext);
+  const [inputValue, setInputValue] = React.useState("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul className="messagelist">
+        {messages.map((m, i) => (
+          <li key={i}>
+            <div>{m.timestamp}</div>
+            <div>{m.publisher}</div>
+            <div>{m.text}</div>
+          </li>
+        ))}
+      </ul>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          sendMessage({ text: inputValue });
+          setInputValue("");
+        }}
+      >
+        <input
+          placeholder="Send a message"
+          onChange={e => setInputValue(e.target.value)}
+          value={inputValue}
+        />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 }
