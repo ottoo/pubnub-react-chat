@@ -51,14 +51,10 @@ export class ChatContextProvider extends React.Component {
     this.PubNub.publish(
       {
         channel: channelName,
-        message: { ...message }
+        message: { ...message, timestamp: new Date().toLocaleString() }
       },
       status => {
-        if (status.error) {
-          console.log(status);
-          return;
-        }
-        console.log(status);
+        console.log("Message published!", status);
       }
     );
   };
